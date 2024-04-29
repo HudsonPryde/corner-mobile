@@ -5,40 +5,40 @@ import { Link, useGlobalSearchParams } from 'expo-router';
 import { StyleSheet, Pressable, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useAppSelector } from '@/redux/hooks';
-import { selectLoyaltyAccount } from '@/redux/slices/user';
+import { selectLoyaltyProgram } from '@/redux/slices/user';
 import { JosefinText } from '@/components/StyledText';
 import LoyaltyTierCard from '@/components/loyalty/LoyaltyTierCard';
 import { LoyaltyProgramTerminology } from 'square';
 
 export default function SellerAboutScreen() {
   const { id } = useGlobalSearchParams();
-  const loyaltyAccount = useAppSelector(selectLoyaltyAccount(id as string));
+  const loyaltyProgram = useAppSelector(selectLoyaltyProgram(id as string));
   return (
     <View>
       {/* shop details */}
       <View>
         <View style={styles.infoContainer}>
-          {loyaltyAccount?.location.phoneNumber && (
+          {loyaltyProgram?.location.phoneNumber && (
             <View style={styles.infoRow}>
               <Icon name={'call-outline'} size={24} />
               <Text style={styles.subtitle}>
-                {loyaltyAccount.location.phoneNumber}
+                {loyaltyProgram.location.phoneNumber}
               </Text>
             </View>
           )}
-          {loyaltyAccount?.location.businessEmail && (
+          {loyaltyProgram?.location.businessEmail && (
             <View style={styles.infoRow}>
               <Icon name={'mail-outline'} size={24} />
               <Text style={styles.subtitle}>
-                {loyaltyAccount.location.businessEmail}
+                {loyaltyProgram.location.businessEmail}
               </Text>
             </View>
           )}
-          {loyaltyAccount?.location.websiteUrl && (
+          {loyaltyProgram?.location.websiteUrl && (
             <View style={styles.infoRow}>
               <Icon name={'globe-outline'} size={24} />
               <Text style={styles.subtitle}>
-                {loyaltyAccount.location.websiteUrl}
+                {loyaltyProgram.location.websiteUrl}
               </Text>
             </View>
           )}
@@ -48,7 +48,7 @@ export default function SellerAboutScreen() {
       <View style={{ marginBottom: 20 }}>
         <Text style={styles.sectionTitle}>About this location</Text>
         <Text style={styles.paragraph}>
-          {loyaltyAccount?.location.description}
+          {loyaltyProgram?.location.description}
         </Text>
       </View>
     </View>

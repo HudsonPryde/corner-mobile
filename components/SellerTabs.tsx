@@ -8,9 +8,11 @@ import {
 } from 'react-native';
 import { useEffect, useState, useRef } from 'react';
 import { Animated, useAnimatedValue } from 'react-native';
+import { Link, usePathname } from 'expo-router';
 
-export default function SellerTabs() {
-  const [activeTab, setActiveTab] = useState(0);
+export default function SellerTabs({ programId }: { programId: string }) {
+  const path = usePathname();
+  const [activeTab, setActiveTab] = useState(path === '/seller/' ? 0 : 1);
   const indicatorPos = useAnimatedValue(0);
   const indicatorWidth = useAnimatedValue(0);
   const tabsRef = useRef<View>(null);
@@ -41,12 +43,20 @@ export default function SellerTabs() {
   return (
     <View style={styles.container}>
       <View style={styles.tabs} ref={tabsRef}>
-        <Pressable onPress={() => setActiveTab(0)} ref={aboutTabRef}>
-          <Text style={styles.tab}>About</Text>
-        </Pressable>
-        <Pressable onPress={() => setActiveTab(1)} ref={rewardsTabRef}>
-          <Text style={styles.tab}>Rewards</Text>
-        </Pressable>
+        <Link
+          push
+          href={{ pathname: '/seller/', params: { id: programId } }}
+          asChild
+        >
+          <Pressable onPress={() => setActiveTab(0)} ref={aboutTabRef}>
+            <Text style={styles.tab}>About</Text>
+          </Pressable>
+        </Link>
+        <Link push href={`/seller/loyalty/${programId}`} asChild>
+          <Pressable onPress={() => setActiveTab(1)} ref={rewardsTabRef}>
+            <Text style={styles.tab}>Rewards</Text>
+          </Pressable>
+        </Link>
       </View>
       <Animated.View
         style={[
@@ -72,10 +82,11 @@ const styles = StyleSheet.create({
   tab: {
     fontSize: 16,
     paddingVertical: 10,
+    fontWeight: '500',
   },
   indicator: {
-    height: 2,
+    height: 3,
     borderRadius: 1,
-    backgroundColor: '#9be8a',
+    backgroundColor: '#9be8ac',
   },
 });

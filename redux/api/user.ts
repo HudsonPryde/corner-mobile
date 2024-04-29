@@ -5,7 +5,9 @@ import { setUser, setLoyaltyPrograms } from '../slices/user';
 
 const userApi = createApi({
   reducerPath: 'userApi',
-  baseQuery: fetchBaseQuery({ baseUrl: 'http://192.168.0.10:3000/customers/' }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: 'http://192.168.0.10:3000/customers/',
+  }),
   tagTypes: ['User', 'LoyaltyPrograms'],
   endpoints: (build) => ({
     getUser: build.query<User, string>({
@@ -44,6 +46,17 @@ const userApi = createApi({
           console.error('Error fetching loyalty programs', error);
         }
       },
+    }),
+    redeemLoyaltyReward: build.mutation<
+      void,
+      { accountId: string; rewardId: string }
+    >({
+      query: ({ accountId, rewardId }) => ({
+        url: `${accountId}/redeem`,
+        method: 'POST',
+        body: { rewardId },
+      }),
+      invalidatesTags: ['User'],
     }),
   }),
 });

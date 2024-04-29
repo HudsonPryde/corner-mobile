@@ -15,8 +15,7 @@ export default function LoyaltyAccountCard({
   return (
     <Link
       href={{
-        pathname: '/seller/',
-        params: { id: loyaltyAccount.account.id as string },
+        pathname: `/seller/loyalty/${loyaltyAccount.account.id as string}`,
       }}
       asChild
     >

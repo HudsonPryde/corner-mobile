@@ -30,7 +30,7 @@ export const { setUser, setLoyaltyPrograms } = users.actions;
 export const selectUser = (state: RootState) => state.users.user;
 export const selectLoyaltyPrograms = (state: RootState) =>
   state.users.loyaltyPrograms;
-export const selectLoyaltyAccount = (id: string) => (state: RootState) =>
+export const selectLoyaltyProgram = (id: string) => (state: RootState) =>
   state.users.loyaltyPrograms.find((program) =>
     program.account.id === id ? program : null
   );
